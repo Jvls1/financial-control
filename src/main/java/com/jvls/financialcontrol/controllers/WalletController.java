@@ -37,7 +37,7 @@ public class WalletController {
         if (walletPage.isEmpty()) {
             throw new InfoNotFoundException("Wallet not found");
         }
-        return new ResponseEntity<>(walletPage, HttpStatus.OK);
+        return ResponseEntity.ok(walletPage);
     }
 
     @GetMapping("/{id}")
@@ -46,7 +46,7 @@ public class WalletController {
         if (wallet.isEmpty()) {
             return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(wallet.get(), HttpStatus.OK);
+        return ResponseEntity.ok(wallet.get());
     }
 
     @GetMapping("/owner/{id}")
@@ -55,7 +55,7 @@ public class WalletController {
         if(wallets.isEmpty()) {
             throw new InfoNotFoundException("Wallet not found");
         }
-        return new ResponseEntity<>(wallets, HttpStatus.OK);
+        return ResponseEntity.ok(wallets);
     }
 
     @PostMapping("/collaborator")

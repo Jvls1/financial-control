@@ -28,7 +28,6 @@ public class IncomeResponseDTO {
     public IncomeResponseDTO setValues(Income income) {
         description = income.getDescription();
         amount = income.getAmount();
-        dateRegister = income.getDateRegister();
         idWallet = income.getWallet().getId();
         return this;
     }

@@ -10,11 +10,9 @@ import com.jvls.financialcontrol.dtos.ExpenseCreationDTO;
 import com.jvls.financialcontrol.dtos.ExpenseResponseDTO;
 import com.jvls.financialcontrol.entities.Expense;
 import com.jvls.financialcontrol.entities.Wallet;
-import com.jvls.financialcontrol.enums.EnumBuyMethod;
 import com.jvls.financialcontrol.exceptions.InfoNotFoundException;
 import com.jvls.financialcontrol.repositories.IExpenseRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,23 +47,16 @@ public class ExpenseService {
         return Optional.of(expenseResponseTO);
     }
 
-    public void save(Expense expense) {
-        expense.setDateRegister(LocalDate.now());
-        expense.setEnumBuyMethod(EnumBuyMethod.CASH);
-        iExpenseRepository.save(expense);
-    }
-
     public Expense save(ExpenseCreationDTO expenseCreationTO) throws InfoNotFoundException {
-        Optional<Wallet> walletOptional = walletService.findById(expenseCreationTO.getIdWallet());
+        Optional<Wallet> walletOptional = walletService.findByIdAndWalletOwnerId(expenseCreationTO.getIdWallet(), sessionService.sessionUser().getId());
         if (walletOptional.isEmpty()) {
             throw new InfoNotFoundException("Wallet not found");
         }
         Expense expense = new Expense();
         expense.setAmount(expenseCreationTO.getAmount());
         expense.setDescription(expenseCreationTO.getDescription());
-        expense.setDateRegister(LocalDate.now());
         expense.setWallet(walletOptional.get());
-        expense.setEnumBuyMethod(expenseCreationTO.getEnumBuyMethod());
+        expense.setEnumBuyMethod(expenseCreationTO.getBuyMethod());
 
         return iExpenseRepository.save(expense);
     }

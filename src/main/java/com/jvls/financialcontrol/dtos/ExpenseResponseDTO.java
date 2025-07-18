@@ -28,7 +28,6 @@ public class ExpenseResponseDTO {
     public ExpenseResponseDTO setValues(Expense expense) {
         description = expense.getDescription();
         amount = expense.getAmount();
-        dateRegister = expense.getDateRegister();
         idWallet = expense.getWallet().getId();
         enumBuyMethod = expense.getEnumBuyMethod();
         return this;

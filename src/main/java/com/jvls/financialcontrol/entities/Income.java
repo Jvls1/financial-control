@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "income")
@@ -26,9 +25,6 @@ public class Income extends BaseEntity {
     @DecimalMax(value = "1000000", inclusive = false)
     @Digits(integer = 6, fraction = 2)
     private BigDecimal amount;
-
-    @Column(name = "date_register", nullable = false)
-    private LocalDate dateRegister;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_wallet", nullable = false)

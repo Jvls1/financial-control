@@ -13,7 +13,6 @@ import com.jvls.financialcontrol.entities.Wallet;
 import com.jvls.financialcontrol.exceptions.InfoNotFoundException;
 import com.jvls.financialcontrol.repositories.IIncomeRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -50,7 +49,6 @@ public class IncomeService {
     }
 
     public void save(Income income) {
-        income.setDateRegister(LocalDate.now());
         iIncomeRepository.save(income);
     }
 
@@ -62,7 +60,6 @@ public class IncomeService {
         Income income = new Income();
         income.setDescription(incomeCreationTO.getDescription());
         income.setAmount(incomeCreationTO.getAmount());
-        income.setDateRegister(LocalDate.now());
         income.setWallet(walletOptional.get());
 
         return iIncomeRepository.save(income);

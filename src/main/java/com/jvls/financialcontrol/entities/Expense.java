@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import com.jvls.financialcontrol.enums.EnumBuyMethod;
 
@@ -29,14 +28,15 @@ public class Expense extends BaseEntity {
     @Digits(integer = 6, fraction = 2)
     private BigDecimal amount;
 
-    @Column(name = "date_register", nullable = false)
-    private LocalDate dateRegister;
+    @Column(name = "buy_method", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EnumBuyMethod enumBuyMethod;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_wallet", nullable = false)
     private Wallet wallet;
 
-    @Column(name = "buy_method", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EnumBuyMethod enumBuyMethod;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_category", nullable = false)
+    private Category category;
 }

@@ -67,7 +67,7 @@ public class ExpenseControllerTest extends BaseTest {
          * Change this UUID to a valid one later.
          */
         expenseCreationTO.setIdWallet(new UUID(1, 2));
-        expenseCreationTO.setEnumBuyMethod(EnumBuyMethod.OTHER);
+        expenseCreationTO.setBuyMethod(EnumBuyMethod.OTHER);
 
         HttpEntity<Object> request = new HttpEntity<>(expenseCreationTO, getJwtAuthenticationHeader());
 

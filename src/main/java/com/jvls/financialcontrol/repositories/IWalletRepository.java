@@ -11,10 +11,13 @@ import com.jvls.financialcontrol.entities.Wallet;
 import com.jvls.financialcontrol.repositories.generic.IGenericRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface IWalletRepository extends IGenericRepository<Wallet> {
+
+    Optional<Wallet> findByIdAndWalletOwnerId(UUID idWallet, UUID idUserOwner);
 
     @Query("""
             select w

@@ -2,7 +2,6 @@ package com.jvls.financialcontrol.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +11,8 @@ import com.jvls.financialcontrol.dtos.ExpenseResponseDTO;
 import com.jvls.financialcontrol.exceptions.InfoNotFoundException;
 import com.jvls.financialcontrol.services.ExpenseService;
 import com.jvls.financialcontrol.utils.URIUtil;
+
+import jakarta.validation.Valid;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -24,14 +25,14 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody ExpenseCreationDTO expenseParam) throws InfoNotFoundException {
+    public ResponseEntity<Object> save(@Valid @RequestBody ExpenseCreationDTO expenseParam) throws InfoNotFoundException {
         var expense = expenseService.save(expenseParam);
         return ResponseEntity.created(URIUtil.getUri(expense.getId())).build();
     }
 
     @GetMapping
     public ResponseEntity<Page<ExpenseResponseDTO>> findAll(@RequestParam Integer page, @RequestParam Integer row) {
-        return new ResponseEntity<>(expenseService.findAllExpense(page, row), HttpStatus.OK);
+        return ResponseEntity.ok(expenseService.findAllExpense(page, row));
     }
 
     @GetMapping("/{id}")

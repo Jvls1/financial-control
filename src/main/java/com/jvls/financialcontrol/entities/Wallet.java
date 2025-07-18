@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Month;
-import java.time.Year;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -16,17 +15,14 @@ import java.util.List;
 @NoArgsConstructor
 public class Wallet extends BaseEntity {
 
-    @Column(name = "month", nullable = false)
-    private Month month;
+    @Column(name = "name", length = 100, nullable = false)
+    private String name;
 
-    @Column(name = "year", nullable = false)
-    private Year year;
+    @Column(name = "description", length = 255)
+    private String description;
 
-    @OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Income> incomes;
-
-    @OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Expense> expenses;
+    @Column(name = "balance", precision = 8, scale = 2, nullable = false)
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @ManyToOne
     @JoinColumn(name = "id_user_owner", nullable = false)
@@ -35,4 +31,10 @@ public class Wallet extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_user_collaborator")
     private User walletCollaborator;
+
+    @OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Income> incomes;
+
+    @OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Expense> expenses;
 }

@@ -35,14 +35,6 @@ public class User extends BaseEntity implements UserDetails {
     @NotBlank(message = "Email is mandatory")
     private String email;
 
-    // @OneToMany(mappedBy = "walletOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // @JsonIgnore
-    // private List<Wallet> walletsOwner;
-
-    // @OneToMany(mappedBy = "walletCollaborator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // @JsonIgnore
-    // private List<Wallet> walletsCollaborator;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
        return List.of();

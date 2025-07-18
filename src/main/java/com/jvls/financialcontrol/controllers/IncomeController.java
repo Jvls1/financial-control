@@ -2,7 +2,6 @@ package com.jvls.financialcontrol.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,7 @@ public class IncomeController {
 
     @GetMapping
     public ResponseEntity<Page<IncomeResponseDTO>> findAll(@RequestParam Integer page, @RequestParam Integer row) {
-        return new ResponseEntity<>(incomeService.findAllIncome(page, row), HttpStatus.OK);
+        return ResponseEntity.ok(incomeService.findAllIncome(page, row));
     }
 
     @GetMapping("/{id}")
@@ -40,7 +39,7 @@ public class IncomeController {
         if (income.isEmpty()) {
             throw new InfoNotFoundException("Income not found");
         }
-        return new ResponseEntity<>(income.get(), HttpStatus.OK);
+        return ResponseEntity.ok(income.get());
     }
 
     @DeleteMapping("/{id}")
