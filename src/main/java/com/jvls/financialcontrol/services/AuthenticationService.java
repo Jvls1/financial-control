@@ -1,6 +1,7 @@
 package com.jvls.financialcontrol.services;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +32,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     @Transactional
-    public User signup(UserCreationDTO dto) throws FinancialControlException {
+    public UUID signup(UserCreationDTO dto) throws FinancialControlException {
         var now = LocalDateTime.now();
         if (!StringUtil.isEmailValid(dto.getEmail())) {
             throw new UserCreationException("Invalid Email");
@@ -53,7 +54,7 @@ public class AuthenticationService {
         wallet.setName("Personal Wallet");
         iWalletRepository.save(wallet);
 
-        return savedUser;
+        return savedUser.getId();
     }
 
     public User signin(SignInDTO dto) {

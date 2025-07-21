@@ -2,6 +2,9 @@ package com.jvls.financialcontrol.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +18,7 @@ import com.jvls.financialcontrol.exceptions.FinancialControlException;
 import com.jvls.financialcontrol.exceptions.InfoNotFoundException;
 import com.jvls.financialcontrol.services.AuthenticationService;
 import com.jvls.financialcontrol.services.JwtService;
+import com.jvls.financialcontrol.utils.URIUtil;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +33,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<User> signup(@Valid @RequestBody UserCreationDTO dto) throws FinancialControlException {
-        return ResponseEntity.ok().body(authenticationService.signup(dto));
+        UUID userId = authenticationService.signup(dto);
+        return ResponseEntity.created(URIUtil.getUri(userId, "api/user")).build();
     }
 
     @PostMapping("/signin")

@@ -9,15 +9,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class URIUtil {
 
-    /**
-     * Build URI for any resource given its base path and ID.
-     * 
-     * @param id the resource ID to append
-     * @return the full URI pointing to the created resource
-     */
     public static URI getUri(UUID id) {
         return ServletUriComponentsBuilder
                 .fromCurrentRequestUri()
+                .pathSegment(id.toString())
+                .build()
+                .toUri();
+    }
+
+    public static URI getUri(UUID id, String... pathSegments) {
+        return ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .pathSegment(pathSegments)
                 .pathSegment(id.toString())
                 .build()
                 .toUri();
